@@ -45,6 +45,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
+            System.out.println(String.format("User с именем — %s добавлен в базу данных", name));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -77,6 +78,7 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println(users.toString());
         return users;
     }
 

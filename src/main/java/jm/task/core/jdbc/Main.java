@@ -11,14 +11,14 @@ public class Main {
 
         userDao.createUsersTable();
 
-        userDao.saveUser("John", "Doe", (byte) 20);
-        userDao.saveUser("Vasya", "Pupkin", (byte) 25);
-        userDao.saveUser("Oleg", "Anisimov", (byte) 31);
-        userDao.saveUser("Su", "Chai", (byte) 38);
+        userDao.saveUser("Andrey", "Kuznetsov", (byte) 23);
+        userDao.saveUser("Arkadii", "Pupkin", (byte) 45);
+        userDao.saveUser("Nikita", "Smolnikov", (byte) 32);
+        userDao.saveUser("Nikita", "Sebehov", (byte) 45);
 
-//        userDao.removeUserById(1);
-//        userDao.getAllUsers();
-//        userDao.cleanUsersTable();
-//        userDao.dropUsersTable();
+        userDao.removeUserById(1);
+        userDao.getAllUsers();
+        userDao.cleanUsersTable();
+        userDao.dropUsersTable();
     }
 }
