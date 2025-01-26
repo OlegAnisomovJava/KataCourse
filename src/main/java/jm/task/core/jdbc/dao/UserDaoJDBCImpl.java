@@ -19,8 +19,9 @@ public class UserDaoJDBCImpl implements UserDao {
                 "name VARCHAR(50), " +
                 "lastName VARCHAR(50), " +
                 "age TINYINT)";
-        try (Connection connection = Util.getConnection(); Statement statement = connection.createStatement()) {
-            statement.executeUpdate(query);
+        try (Connection connection = Util.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
             System.out.println("Table 'Users' created or already exists.");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -29,8 +30,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         String query = "DROP TABLE IF EXISTS Users";
-        try (Connection connection = Util.getConnection(); Statement statement = connection.createStatement()) {
-            statement.executeUpdate(query);
+        try (Connection connection = Util.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
             System.out.println("Table 'Users' dropped.");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,8 +68,9 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM Users";
-        try (Connection connection = Util.getConnection(); Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(query);
+        try (Connection connection = Util.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
@@ -78,15 +81,16 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(users.toString());
+        users.stream().forEach(user -> System.out.println(user));
         return users;
     }
 
     public void cleanUsersTable() {
         String query = "DELETE FROM Users";
         try (Connection connection = Util.getConnection();
-             Statement statement = connection.createStatement()) {
-            statement.executeUpdate(query);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+            System.out.println("Users table cleaned.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
