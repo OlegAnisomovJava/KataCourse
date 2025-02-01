@@ -88,11 +88,17 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
+        Transaction transaction = null;
         try (org.hibernate.Session session = Util.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
             List<User> users = session.createQuery("FROM User", User.class).list();
+            transaction.commit();
             logger.info("Получено {} пользователей из базы данных.", users.size());
             return users;
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             logger.error("Ошибка при получении списка пользователей.", e);
             throw new DaoException("Ошибка при получении списка пользователей.", e);
         }
